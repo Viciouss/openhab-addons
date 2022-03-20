@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="modbus"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
+
+	<thing-type id="huawei-sun2000">
+
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="tcp"/>
+		</supported-bridge-type-refs>
+
+		<label>Huawei Sun 2000 Inverter</label>
+		<description>Supports reading data from a Huawei Sun 2000 inverter using Modbus Gateway TCP</description>
+		<category>INVERTER</category>
+
+		<channel-groups>
+			<channel-group id="inverterBasics" typeId="inverterBasics"/>
+			<channel-group id="inverterState" typeId="inverterState"/>
+			<channel-group id="inverterAdjustments" typeId="inverterAdjustments"/>
+		</channel-groups>
+
+		<config-description>
+			<parameter name="refreshInterval" type="integer" unit="ms" min="30000">
+				<label>Refresh Interval</label>
+				<description>Refresh interval</description>
+				<default>60000</default>
+			</parameter>
+		</config-description>
+
+	</thing-type>
+
+	<!-- Channel Group Types -->
+	<channel-group-type id="inverterBasics">
+		<label>inverterBasics</label>
+		<description>inverterBasics</description>
+		<channels>
+			<channel id="modelName" typeId="modelName">
+				<label>Model</label>
+			</channel>
+			<channel id="serialNumber" typeId="serialNumber">
+				<label>Serial Number</label>
+			</channel>
+			<channel id="productNumber" typeId="productNumber">
+				<label>Product Number</label>
+			</channel>
+			<channel id="modelId" typeId="modelId">
+				<label>Model ID</label>
+			</channel>
+			<channel id="numPvStrings" typeId="numPvStrings">
+				<label>Number of PV strings</label>
+			</channel>
+			<channel id="numMppTrackers" typeId="numMppTrackers">
+				<label>Number of MPP trackers</label>
+			</channel>
+			<channel id="ratedPower" typeId="ratedPower">
+				<label>Rated power (Pn)</label>
+			</channel>
+			<channel id="maxActivePower" typeId="maxActivePower">
+				<label>Maximum active power (Pmax)</label>
+			</channel>
+			<channel id="maxApparentPower" typeId="maxApparentPower">
+				<label>Maximum apparent power (Smax)</label>
+			</channel>
+			<channel id="maxReactivePowerFed" typeId="maxReactivePowerFed">
+				<label>Maximum reactive power (Qmax, fed to the power grid)</label>
+			</channel>
+			<channel id="maxReactivePowerAbsorbed" typeId="maxReactivePowerAbsorbed">
+				<label>Maximum reactive power (Qmax, absorbed from the power grid)</label>
+			</channel>
+		</channels>
+	</channel-group-type>
+	<channel-group-type id="inverterState">
+		<label>inverterState</label>
+		<description>inverterState</description>
+		<channels>
+			<channel id="pv1Voltage" typeId="pv1Voltage">
+				<label>PV1 voltage</label>
+			</channel>
+			<channel id="pv1Current" typeId="pv1Current">
+				<label>PV1 current</label>
+			</channel>
+			<channel id="pv2Voltage" typeId="pv2Voltage">
+				<label>PV2 voltage</label>
+			</channel>
+			<channel id="pv2Current" typeId="pv2Current">
+				<label>PV2 current</label>
+			</channel>
+			<channel id="pv3Voltage" typeId="pv3Voltage">
+				<label>PV3 voltage</label>
+			</channel>
+			<channel id="pv3Current" typeId="pv3Current">
+				<label>PV3 current</label>
+			</channel>
+			<channel id="pv4Voltage" typeId="pv4Voltage">
+				<label>PV4 voltage</label>
+			</channel>
+			<channel id="pv4Current" typeId="pv4Current">
+				<label>PV4 current</label>
+			</channel>
+			<channel id="inputPower" typeId="inputPower">
+				<label>Input power</label>
+			</channel>
+			<channel id="lineVoltagePhaseAandB" typeId="lineVoltagePhaseAandB">
+				<label>Power grid voltage/Line voltage between phases A and B</label>
+			</channel>
+			<channel id="lineVoltagePhaseBandC" typeId="lineVoltagePhaseBandC">
+				<label>Line voltage between phases B and C</label>
+			</channel>
+			<channel id="lineVoltagePhaseCandA" typeId="lineVoltagePhaseCandA">
+				<label>Line voltage between phases C and A</label>
+			</channel>
+			<channel id="phaseAvoltage" typeId="phaseAvoltage">
+				<label>Phase A voltage</label>
+			</channel>
+			<channel id="phaseBvoltage" typeId="phaseBvoltage">
+				<label>Phase B voltage</label>
+			</channel>
+			<channel id="phaseCvoltage" typeId="phaseCvoltage">
+				<label>Phase C voltage</label>
+			</channel>
+			<channel id="phaseAcurrent" typeId="phaseAcurrent">
+				<label>Power grid current/Phase A current</label>
+			</channel>
+			<channel id="phaseBcurrent" typeId="phaseBcurrent">
+				<label>Phase B current</label>
+			</channel>
+			<channel id="phaseCcurrent" typeId="phaseCcurrent">
+				<label>Phase C current</label>
+			</channel>
+			<channel id="peakActivePowerCurrentDay" typeId="peakActivePowerCurrentDay">
+				<label>Peak active power of current day</label>
+			</channel>
+			<channel id="activePower" typeId="activePower">
+				<label>Active power</label>
+			</channel>
+			<channel id="reactivePower" typeId="reactivePower">
+				<label>Reactive power</label>
+			</channel>
+			<channel id="powerFactor" typeId="powerFactor">
+				<label>Power factor</label>
+			</channel>
+			<channel id="gridFrequency" typeId="gridFrequency">
+				<label>Grid frequency</label>
+			</channel>
+			<channel id="efficiency" typeId="efficiency">
+				<label>Efficiency</label>
+			</channel>
+			<channel id="internalTemperature" typeId="internalTemperature">
+				<label>Internal temperature</label>
+			</channel>
+			<channel id="insulationResistance" typeId="insulationResistance">
+				<label>Insulation resistance</label>
+			</channel>
+			<channel id="deviceStatus" typeId="deviceStatus">
+				<label>Device status</label>
+			</channel>
+			<channel id="faultCode" typeId="faultCode">
+				<label>Fault code</label>
+			</channel>
+			<channel id="startupTime" typeId="startupTime">
+				<label>Startup time</label>
+			</channel>
+			<channel id="shutdownTime" typeId="shutdownTime">
+				<label>Shutdown time</label>
+			</channel>
+			<channel id="accumulatedEnergyYield" typeId="accumulatedEnergyYield">
+				<label>Accumulated energy yield</label>
+			</channel>
+			<channel id="dailyEnergyYield" typeId="dailyEnergyYield">
+				<label>Daily energy yield</label>
+			</channel>
+		</channels>
+	</channel-group-type>
+	<channel-group-type id="inverterAdjustments">
+		<label>inverterAdjustments</label>
+		<description>inverterAdjustments</description>
+		<channels>
+			<channel id="activeAdjustmentMode" typeId="activeAdjustmentMode">
+				<label>[Active] Adjustment mode</label>
+			</channel>
+			<channel id="activeAdjustmentValue" typeId="activeAdjustmentValue">
+				<label>[Active] Adjustment value</label>
+			</channel>
+			<channel id="activeAdjustmentCommand" typeId="activeAdjustmentCommand">
+				<label>[Active] Adjustment command</label>
+			</channel>
+			<channel id="reactiveAdjustmentMode" typeId="reactiveAdjustmentMode">
+				<label>[Reactive] Adjustment mode</label>
+			</channel>
+			<channel id="reactiveAdjustmentValue" typeId="reactiveAdjustmentValue">
+				<label>[Reactive] Adjustment value</label>
+			</channel>
+			<channel id="reactiveAdjustmentCommand" typeId="reactiveAdjustmentCommand">
+				<label>[Reactive] Adjustment command</label>
+			</channel>
+		</channels>
+	</channel-group-type>
+
+	<channel-type id="modelName" advanced="false">
+		<item-type>String</item-type>
+		<label>Model</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="serialNumber" advanced="false">
+		<item-type>String</item-type>
+		<label>Serial Number</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="productNumber" advanced="false">
+		<item-type>String</item-type>
+		<label>Product Number</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="modelId" advanced="false">
+		<item-type>Number</item-type>
+		<label>Model ID</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="numPvStrings" advanced="false">
+		<item-type>Number</item-type>
+		<label>Number of PV strings</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="numMppTrackers" advanced="false">
+		<item-type>Number</item-type>
+		<label>Number of MPP trackers</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="ratedPower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Rated power (Pn)</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="maxActivePower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Maximum active power (Pmax)</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="maxApparentPower" advanced="false">
+		<item-type>Number</item-type>
+		<label>Maximum apparent power (Smax)</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="maxReactivePowerFed" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Maximum reactive power (Qmax, fed to the power grid)</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="maxReactivePowerAbsorbed" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Maximum reactive power (Qmax, absorbed from the power grid)</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv1Voltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>PV1 voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv1Current" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>PV1 current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv2Voltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>PV2 voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv2Current" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>PV2 current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv3Voltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>PV3 voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv3Current" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>PV3 current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv4Voltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>PV4 voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv4Current" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>PV4 current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="inputPower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Input power</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="lineVoltagePhaseAandB" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Power grid voltage/Line voltage between phases A and B</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="lineVoltagePhaseBandC" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Line voltage between phases B and C</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="lineVoltagePhaseCandA" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Line voltage between phases C and A</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseAvoltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Phase A voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseBvoltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Phase B voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseCvoltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Phase C voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseAcurrent" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>Power grid current/Phase A current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseBcurrent" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>Phase B current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseCcurrent" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>Phase C current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="peakActivePowerCurrentDay" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Peak active power of current day</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="activePower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Active power</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="reactivePower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Reactive power</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="powerFactor" advanced="false">
+		<item-type>Number</item-type>
+		<label>Power factor</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="gridFrequency" advanced="false">
+		<item-type>Number:Frequency</item-type>
+		<label>Grid frequency</label>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="efficiency" advanced="false">
+		<item-type>Number:Dimensionless</item-type>
+		<label>Efficiency</label>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="internalTemperature" advanced="false">
+		<item-type>Number:Temperature</item-type>
+		<label>Internal temperature</label>
+		<category>temperature</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="insulationResistance" advanced="false">
+		<item-type>Number:ElectricResistance</item-type>
+		<label>Insulation resistance</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="deviceStatus" advanced="false">
+		<item-type>Number</item-type>
+		<label>Device status</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="faultCode" advanced="false">
+		<item-type>Number</item-type>
+		<label>Fault code</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="startupTime" advanced="false">
+		<item-type>Number</item-type>
+		<label>Startup time</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="shutdownTime" advanced="false">
+		<item-type>Number</item-type>
+		<label>Shutdown time</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="accumulatedEnergyYield" advanced="false">
+		<item-type>Number:Energy</item-type>
+		<label>Accumulated energy yield</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="dailyEnergyYield" advanced="false">
+		<item-type>Number:Energy</item-type>
+		<label>Daily energy yield</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="activeAdjustmentMode" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Active] Adjustment mode</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="activeAdjustmentValue" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Active] Adjustment value</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="activeAdjustmentCommand" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Active] Adjustment command</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="reactiveAdjustmentMode" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Reactive] Adjustment mode</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="reactiveAdjustmentValue" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Reactive] Adjustment value</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="reactiveAdjustmentCommand" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Reactive] Adjustment command</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+</thing:thing-descriptions>
