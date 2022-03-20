@@ -1,0 +1,1181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<thing:thing-descriptions bindingId="modbus"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:thing="https://openhab.org/schemas/thing-description/v1.0.0"
+	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
+
+	<thing-type id="huawei-sun2000">
+
+		<supported-bridge-type-refs>
+			<bridge-type-ref id="tcp"/>
+		</supported-bridge-type-refs>
+
+		<label>Huawei Sun 2000 Inverter</label>
+		<description>Supports reading data from a Huawei Sun 2000 inverter using Modbus Gateway TCP</description>
+		<category>INVERTER</category>
+
+		<channel-groups>
+			<channel-group id="inverterBasics" typeId="inverterBasics"/>
+			<channel-group id="inverterState" typeId="inverterState"/>
+			<channel-group id="inverterAdjustments" typeId="inverterAdjustments"/>
+		</channel-groups>
+
+		<config-description>
+			<parameter name="refreshInterval" type="integer" unit="ms" min="10000">
+				<label>Refresh Interval</label>
+				<description>Refresh interval</description>
+				<default>30000</default>
+			</parameter>
+		</config-description>
+
+	</thing-type>
+
+	<!-- Channel Group Types -->
+	<channel-group-type id="inverterBasics">
+		<label>inverterBasics</label>
+		<description>inverterBasics</description>
+		<channels>
+			<channel id="modelName" typeId="modelName">
+				<label>Model</label>
+			</channel>
+			<channel id="serialNumber" typeId="serialNumber">
+				<label>Serial Number</label>
+			</channel>
+			<channel id="productNumber" typeId="productNumber">
+				<label>Product Number</label>
+			</channel>
+			<channel id="modelId" typeId="modelId">
+				<label>Model ID</label>
+			</channel>
+			<channel id="numPvStrings" typeId="numPvStrings">
+				<label>Number of PV strings</label>
+			</channel>
+			<channel id="numMppTrackers" typeId="numMppTrackers">
+				<label>Number of MPP trackers</label>
+			</channel>
+			<channel id="ratedPower" typeId="ratedPower">
+				<label>Rated power (Pn)</label>
+			</channel>
+			<channel id="maxActivePower" typeId="maxActivePower">
+				<label>Maximum active power (Pmax)</label>
+			</channel>
+			<channel id="maxApparentPower" typeId="maxApparentPower">
+				<label>Maximum apparent power (Smax)</label>
+			</channel>
+			<channel id="maxReactivePowerFed" typeId="maxReactivePowerFed">
+				<label>Maximum reactive power (Qmax, fed to the power grid)</label>
+			</channel>
+			<channel id="maxReactivePowerAbsorbed" typeId="maxReactivePowerAbsorbed">
+				<label>Maximum reactive power (Qmax, absorbed from the power grid)</label>
+			</channel>
+		</channels>
+	</channel-group-type>
+	<channel-group-type id="inverterState">
+		<label>inverterState</label>
+		<description>inverterState</description>
+		<channels>
+
+			<channel id="state1_1" typeId="state1_1">
+				<label>Standby</label>
+			</channel>
+			<channel id="state1_2" typeId="state1_2">
+				<label>Grid connected</label>
+			</channel>
+			<channel id="state1_3" typeId="state1_3">
+				<label>Grid connected with derating due to power rationing</label>
+			</channel>
+			<channel id="state1_4" typeId="state1_4">
+				<label>Grid connected with derating due to internal causes</label>
+			</channel>
+			<channel id="state1_5" typeId="state1_5">
+				<label>Normal Stop</label>
+			</channel>
+			<channel id="state1_6" typeId="state1_6">
+				<label>Stop due to faults</label>
+			</channel>
+			<channel id="state1_7" typeId="state1_7">
+				<label>Stop due to power rationing</label>
+			</channel>
+			<channel id="state1_8" typeId="state1_8">
+				<label>Shutdown</label>
+			</channel>
+			<channel id="state1_9" typeId="state1_9">
+				<label>Spot check</label>
+			</channel>
+
+			<channel id="state2_1" typeId="state2_1">
+				<label>Locking Status</label>
+			</channel>
+			<channel id="state2_2" typeId="state2_2">
+				<label>PV Connection Status</label>
+			</channel>
+			<channel id="state2_3" typeId="state2_3">
+				<label>DSP Data Collection</label>
+			</channel>
+
+			<channel id="state3_1" typeId="state3_1">
+				<label>Grid Status</label>
+			</channel>
+			<channel id="state3_2" typeId="state3_2">
+				<label>Off Grid Switch</label>
+			</channel>
+
+			<channel id="alarm1_1" typeId="alarm1_1"/>
+			<channel id="alarm1_2" typeId="alarm1_2"/>
+			<channel id="alarm1_3" typeId="alarm1_3"/>
+			<channel id="alarm1_4" typeId="alarm1_4"/>
+			<channel id="alarm1_5" typeId="alarm1_5"/>
+			<channel id="alarm1_6" typeId="alarm1_6"/>
+			<channel id="alarm1_7" typeId="alarm1_7"/>
+			<channel id="alarm1_8" typeId="alarm1_8"/>
+			<channel id="alarm1_9" typeId="alarm1_9"/>
+			<channel id="alarm1_10" typeId="alarm1_10"/>
+			<channel id="alarm1_11" typeId="alarm1_11"/>
+			<channel id="alarm1_12" typeId="alarm1_12"/>
+			<channel id="alarm1_13" typeId="alarm1_13"/>
+			<channel id="alarm1_14" typeId="alarm1_14"/>
+			<channel id="alarm1_15" typeId="alarm1_15"/>
+			<channel id="alarm1_16" typeId="alarm1_16"/>
+
+			<channel id="alarm2_1" typeId="alarm2_1"/>
+			<channel id="alarm2_2" typeId="alarm2_2"/>
+			<channel id="alarm2_3" typeId="alarm2_3"/>
+			<channel id="alarm2_4" typeId="alarm2_4"/>
+			<channel id="alarm2_5" typeId="alarm2_5"/>
+			<channel id="alarm2_6" typeId="alarm2_6"/>
+			<channel id="alarm2_7" typeId="alarm2_7"/>
+			<channel id="alarm2_8" typeId="alarm2_8"/>
+			<channel id="alarm2_9" typeId="alarm2_9"/>
+			<channel id="alarm2_10" typeId="alarm2_10"/>
+			<channel id="alarm2_11" typeId="alarm2_11"/>
+			<channel id="alarm2_12" typeId="alarm2_12"/>
+			<channel id="alarm2_13" typeId="alarm2_13"/>
+			<channel id="alarm2_14" typeId="alarm2_14"/>
+			<channel id="alarm2_15" typeId="alarm2_15"/>
+			<channel id="alarm2_16" typeId="alarm2_16"/>
+
+			<channel id="alarm3_1" typeId="alarm3_1"/>
+			<channel id="alarm3_2" typeId="alarm3_2"/>
+			<channel id="alarm3_3" typeId="alarm3_3"/>
+			<channel id="alarm3_4" typeId="alarm3_4"/>
+			<channel id="alarm3_5" typeId="alarm3_5"/>
+			<channel id="alarm3_6" typeId="alarm3_6"/>
+			<channel id="alarm3_7" typeId="alarm3_7"/>
+			<channel id="alarm3_8" typeId="alarm3_8"/>
+			<channel id="alarm3_9" typeId="alarm3_9"/>
+			<channel id="alarm3_10" typeId="alarm3_10"/>
+			<channel id="alarm3_11" typeId="alarm3_11"/>
+			<channel id="alarm3_12" typeId="alarm3_12"/>
+			<channel id="alarm3_13" typeId="alarm3_13"/>
+			<channel id="alarm3_14" typeId="alarm3_14"/>
+
+			<channel id="pv1Voltage" typeId="pv1Voltage">
+				<label>PV1 voltage</label>
+			</channel>
+			<channel id="pv1Current" typeId="pv1Current">
+				<label>PV1 current</label>
+			</channel>
+			<channel id="pv2Voltage" typeId="pv2Voltage">
+				<label>PV2 voltage</label>
+			</channel>
+			<channel id="pv2Current" typeId="pv2Current">
+				<label>PV2 current</label>
+			</channel>
+			<channel id="pv3Voltage" typeId="pv3Voltage">
+				<label>PV3 voltage</label>
+			</channel>
+			<channel id="pv3Current" typeId="pv3Current">
+				<label>PV3 current</label>
+			</channel>
+			<channel id="pv4Voltage" typeId="pv4Voltage">
+				<label>PV4 voltage</label>
+			</channel>
+			<channel id="pv4Current" typeId="pv4Current">
+				<label>PV4 current</label>
+			</channel>
+			<channel id="inputPower" typeId="inputPower">
+				<label>Input power</label>
+			</channel>
+			<channel id="lineVoltagePhaseAandB" typeId="lineVoltagePhaseAandB">
+				<label>Power grid voltage/Line voltage between phases A and B</label>
+			</channel>
+			<channel id="lineVoltagePhaseBandC" typeId="lineVoltagePhaseBandC">
+				<label>Line voltage between phases B and C</label>
+			</channel>
+			<channel id="lineVoltagePhaseCandA" typeId="lineVoltagePhaseCandA">
+				<label>Line voltage between phases C and A</label>
+			</channel>
+			<channel id="phaseAvoltage" typeId="phaseAvoltage">
+				<label>Phase A voltage</label>
+			</channel>
+			<channel id="phaseBvoltage" typeId="phaseBvoltage">
+				<label>Phase B voltage</label>
+			</channel>
+			<channel id="phaseCvoltage" typeId="phaseCvoltage">
+				<label>Phase C voltage</label>
+			</channel>
+			<channel id="phaseAcurrent" typeId="phaseAcurrent">
+				<label>Power grid current/Phase A current</label>
+			</channel>
+			<channel id="phaseBcurrent" typeId="phaseBcurrent">
+				<label>Phase B current</label>
+			</channel>
+			<channel id="phaseCcurrent" typeId="phaseCcurrent">
+				<label>Phase C current</label>
+			</channel>
+			<channel id="peakActivePowerCurrentDay" typeId="peakActivePowerCurrentDay">
+				<label>Peak active power of current day</label>
+			</channel>
+			<channel id="activePower" typeId="activePower">
+				<label>Active power</label>
+			</channel>
+			<channel id="reactivePower" typeId="reactivePower">
+				<label>Reactive power</label>
+			</channel>
+			<channel id="powerFactor" typeId="powerFactor">
+				<label>Power factor</label>
+			</channel>
+			<channel id="gridFrequency" typeId="gridFrequency">
+				<label>Grid frequency</label>
+			</channel>
+			<channel id="efficiency" typeId="efficiency">
+				<label>Efficiency</label>
+			</channel>
+			<channel id="internalTemperature" typeId="internalTemperature">
+				<label>Internal temperature</label>
+			</channel>
+			<channel id="insulationResistance" typeId="insulationResistance">
+				<label>Insulation resistance</label>
+			</channel>
+			<channel id="deviceStatus" typeId="deviceStatus">
+				<label>Device status</label>
+			</channel>
+			<channel id="faultCode" typeId="faultCode">
+				<label>Fault code</label>
+			</channel>
+			<channel id="startupTime" typeId="startupTime">
+				<label>Startup time</label>
+			</channel>
+			<channel id="shutdownTime" typeId="shutdownTime">
+				<label>Shutdown time</label>
+			</channel>
+			<channel id="accumulatedEnergyYield" typeId="accumulatedEnergyYield">
+				<label>Accumulated energy yield</label>
+			</channel>
+			<channel id="dailyEnergyYield" typeId="dailyEnergyYield">
+				<label>Daily energy yield</label>
+			</channel>
+		</channels>
+	</channel-group-type>
+	<channel-group-type id="inverterAdjustments">
+		<label>inverterAdjustments</label>
+		<description>inverterAdjustments</description>
+		<channels>
+			<channel id="activeAdjustmentMode" typeId="activeAdjustmentMode">
+				<label>[Active] Adjustment mode</label>
+			</channel>
+			<channel id="activeAdjustmentValue" typeId="activeAdjustmentValue">
+				<label>[Active] Adjustment value</label>
+			</channel>
+			<channel id="activeAdjustmentCommand" typeId="activeAdjustmentCommand">
+				<label>[Active] Adjustment command</label>
+			</channel>
+			<channel id="reactiveAdjustmentMode" typeId="reactiveAdjustmentMode">
+				<label>[Reactive] Adjustment mode</label>
+			</channel>
+			<channel id="reactiveAdjustmentValue" typeId="reactiveAdjustmentValue">
+				<label>[Reactive] Adjustment value</label>
+			</channel>
+			<channel id="reactiveAdjustmentCommand" typeId="reactiveAdjustmentCommand">
+				<label>[Reactive] Adjustment command</label>
+			</channel>
+		</channels>
+	</channel-group-type>
+
+	<channel-type id="modelName" advanced="false">
+		<item-type>String</item-type>
+		<label>Model</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="serialNumber" advanced="false">
+		<item-type>String</item-type>
+		<label>Serial Number</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="productNumber" advanced="false">
+		<item-type>String</item-type>
+		<label>Product Number</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="modelId" advanced="false">
+		<item-type>Number</item-type>
+		<label>Model ID</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="numPvStrings" advanced="false">
+		<item-type>Number</item-type>
+		<label>Number of PV strings</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="numMppTrackers" advanced="false">
+		<item-type>Number</item-type>
+		<label>Number of MPP trackers</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="ratedPower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Rated power (Pn)</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="maxActivePower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Maximum active power (Pmax)</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="maxApparentPower" advanced="false">
+		<item-type>Number</item-type>
+		<label>Maximum apparent power (Smax)</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="maxReactivePowerFed" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Maximum reactive power (Qmax, fed to the power grid)</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="maxReactivePowerAbsorbed" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Maximum reactive power (Qmax, absorbed from the power grid)</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="state1_1">
+		<item-type>Switch</item-type>
+		<label>Standby</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_2">
+		<item-type>Switch</item-type>
+		<label>Grid connected</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_3">
+		<item-type>Switch</item-type>
+		<label>Grid connected with derating due to power rationing</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_4">
+		<item-type>Switch</item-type>
+		<label>Grid connected with derating due to internal causes</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_5">
+		<item-type>Switch</item-type>
+		<label>Normal Stop</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_6">
+		<item-type>Switch</item-type>
+		<label>Stop due to faults</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_7">
+		<item-type>Switch</item-type>
+		<label>Stop due to power rationing</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_8">
+		<item-type>Switch</item-type>
+		<label>Shutdown</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_9">
+		<item-type>Switch</item-type>
+		<label>Spot check</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="state2_1">
+		<item-type>Number</item-type>
+		<label>Locking Status</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">Locked</option>
+				<option value="1">Unlocked</option>
+			</options>
+		</state>
+	</channel-type>
+	<channel-type id="state2_2">
+		<item-type>Number</item-type>
+		<label>PV Connection Status</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">Disconnected</option>
+				<option value="1">Connected</option>
+			</options>
+		</state>
+	</channel-type>
+	<channel-type id="state2_3">
+		<item-type>Number</item-type>
+		<label>DSP Data Collection</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</options>
+		</state>
+	</channel-type>
+
+	<channel-type id="state3_1">
+		<item-type>Number</item-type>
+		<label>Grid Status</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">On Grid</option>
+				<option value="1">Off Grid</option>
+			</options>
+		</state>
+
+	</channel-type>
+	<channel-type id="state3_2">
+		<item-type>Number</item-type>
+		<label>Off Grid Switch</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">Disabled</option>
+				<option value="1">Enabled</option>
+			</options>
+		</state>
+	</channel-type>
+
+	<channel-type id="alarm1_1">
+		<kind>trigger</kind>
+		<label>High String Input Voltage</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_2">
+		<kind>trigger</kind>
+		<label>DC Arc Fault</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_3">
+		<kind>trigger</kind>
+		<label>String Reverse Connection</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_4">
+		<kind>trigger</kind>
+		<label>String Current Backfeed</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_5">
+		<kind>trigger</kind>
+		<label>Abnormal String Power</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_6">
+		<kind>trigger</kind>
+		<label>AFCI Self-Check Fail</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_7">
+		<kind>trigger</kind>
+		<label>Phase Wire Short-Circuited to PE</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_8">
+		<kind>trigger</kind>
+		<label>Grid Loss</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_9">
+		<kind>trigger</kind>
+		<label>Grid Undervoltage</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_10">
+		<kind>trigger</kind>
+		<label>Grid Overvoltage</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_11">
+		<kind>trigger</kind>
+		<label>Grid Voltage Imbalance</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_12">
+		<kind>trigger</kind>
+		<label>Grid Overfrequency</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_13">
+		<kind>trigger</kind>
+		<label>Grid Underfrequency</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_14">
+		<kind>trigger</kind>
+		<label>Unstable Grid Frequency</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_15">
+		<kind>trigger</kind>
+		<label>Output Overcurrent</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_16">
+		<kind>trigger</kind>
+		<label>Output DC Component Over High</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+
+	<channel-type id="alarm2_1">
+		<kind>trigger</kind>
+		<label>Abnormal Residual Current</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_2">
+		<kind>trigger</kind>
+		<label>Abnormal Grounding</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_3">
+		<kind>trigger</kind>
+		<label>Low Insulation Resistance</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_4">
+		<kind>trigger</kind>
+		<label>Over Temperature</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_5">
+		<kind>trigger</kind>
+		<label>Device Fault</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_6">
+		<kind>trigger</kind>
+		<label>Upgrade Failed or Version Mismatch</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_7">
+		<kind>trigger</kind>
+		<label>License Expired</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_8">
+		<kind>trigger</kind>
+		<label>Faulty Monitoring Unit</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_9">
+		<kind>trigger</kind>
+		<label>Faulty Power Collector</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_10">
+		<kind>trigger</kind>
+		<label>Battery Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_11">
+		<kind>trigger</kind>
+		<label>Active Islanding</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_12">
+		<kind>trigger</kind>
+		<label>Passive Islanding</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_13">
+		<kind>trigger</kind>
+		<label>Transient AC Overvoltage</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_14">
+		<kind>trigger</kind>
+		<label>Peripheral Port Short Circuit</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_15">
+		<kind>trigger</kind>
+		<label>Churn Output Overload</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_16">
+		<kind>trigger</kind>
+		<label>Abnormal PV Module Configuration</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+
+	<channel-type id="alarm3_1">
+		<kind>trigger</kind>
+		<label>Optimizer Fault</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_2">
+		<kind>trigger</kind>
+		<label>Built-in PID operation abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_3">
+		<kind>trigger</kind>
+		<label>High input string voltage to ground</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_4">
+		<kind>trigger</kind>
+		<label>External Fan Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_5">
+		<kind>trigger</kind>
+		<label>Battery Reverse Connection</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_6">
+		<kind>trigger</kind>
+		<label>On-grid/Off-grid controller abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_7">
+		<kind>trigger</kind>
+		<label>PV String Loss</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_8">
+		<kind>trigger</kind>
+		<label>Internal Fan Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_9">
+		<kind>trigger</kind>
+		<label>DC Protection Unit Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_10">
+		<kind>trigger</kind>
+		<label>EL Unit Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_11">
+		<kind>trigger</kind>
+		<label>Active Adjustment Instruction Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_12">
+		<kind>trigger</kind>
+		<label>Reactive Adjustment Instruction Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_13">
+		<kind>trigger</kind>
+		<label>CT Wiring Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_14">
+		<kind>trigger</kind>
+		<label>DC Arc Fault (ADMC Alarm to be cleared manually)</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+
+
+	<channel-type id="pv1Voltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>PV1 voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv1Current" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>PV1 current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv2Voltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>PV2 voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv2Current" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>PV2 current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv3Voltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>PV3 voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv3Current" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>PV3 current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv4Voltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>PV4 voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="pv4Current" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>PV4 current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="inputPower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Input power</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="lineVoltagePhaseAandB" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Power grid voltage/Line voltage between phases A and B</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="lineVoltagePhaseBandC" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Line voltage between phases B and C</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="lineVoltagePhaseCandA" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Line voltage between phases C and A</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseAvoltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Phase A voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseBvoltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Phase B voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseCvoltage" advanced="false">
+		<item-type>Number:ElectricPotential</item-type>
+		<label>Phase C voltage</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseAcurrent" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>Power grid current/Phase A current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseBcurrent" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>Phase B current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="phaseCcurrent" advanced="false">
+		<item-type>Number:ElectricCurrent</item-type>
+		<label>Phase C current</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="peakActivePowerCurrentDay" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Peak active power of current day</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="activePower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Active power</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="reactivePower" advanced="false">
+		<item-type>Number:Power</item-type>
+		<label>Reactive power</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="powerFactor" advanced="false">
+		<item-type>Number</item-type>
+		<label>Power factor</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="gridFrequency" advanced="false">
+		<item-type>Number:Frequency</item-type>
+		<label>Grid frequency</label>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="efficiency" advanced="false">
+		<item-type>Number:Dimensionless</item-type>
+		<label>Efficiency</label>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="internalTemperature" advanced="false">
+		<item-type>Number:Temperature</item-type>
+		<label>Internal temperature</label>
+		<category>temperature</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="insulationResistance" advanced="false">
+		<item-type>Number:ElectricResistance</item-type>
+		<label>Insulation resistance</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="deviceStatus" advanced="false">
+		<item-type>Number</item-type>
+		<label>Device status</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="faultCode" advanced="false">
+		<item-type>Number</item-type>
+		<label>Fault code</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="startupTime" advanced="false">
+		<item-type>Number</item-type>
+		<label>Startup time</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="shutdownTime" advanced="false">
+		<item-type>Number</item-type>
+		<label>Shutdown time</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="accumulatedEnergyYield" advanced="false">
+		<item-type>Number:Energy</item-type>
+		<label>Accumulated energy yield</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="dailyEnergyYield" advanced="false">
+		<item-type>Number:Energy</item-type>
+		<label>Daily energy yield</label>
+		<category>energy</category>
+		<state pattern="%d %unit%" readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="activeAdjustmentMode" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Active] Adjustment mode</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="activeAdjustmentValue" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Active] Adjustment value</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="activeAdjustmentCommand" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Active] Adjustment command</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="reactiveAdjustmentMode" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Reactive] Adjustment mode</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="reactiveAdjustmentValue" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Reactive] Adjustment value</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="reactiveAdjustmentCommand" advanced="false">
+		<item-type>Number</item-type>
+		<label>[Reactive] Adjustment command</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+</thing:thing-descriptions>
