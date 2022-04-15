@@ -44,6 +44,7 @@ public class HuaweiSun2000Variable {
     public static final String UNIT_AMPERE = "A";
     public static final String UNIT_WATT = "W";
     public static final String UNIT_KILOWATT = "kW";
+    public static final String UNIT_KILOWATT_HOURS = "kWh";
     public static final String UNIT_PERCENT = "%";
     public static final String UNIT_TEMP = "°C";
     public static final String UNIT_SEC = "s";

@@ -44,12 +44,7 @@ import org.openhab.core.library.types.QuantityType;
 import org.openhab.core.library.types.StringType;
 import org.openhab.core.library.unit.SIUnits;
 import org.openhab.core.library.unit.Units;
-import org.openhab.core.thing.Bridge;
-import org.openhab.core.thing.Channel;
-import org.openhab.core.thing.ChannelUID;
-import org.openhab.core.thing.Thing;
-import org.openhab.core.thing.ThingStatus;
-import org.openhab.core.thing.ThingStatusDetail;
+import org.openhab.core.thing.*;
 import org.openhab.core.thing.binding.BaseThingHandler;
 import org.openhab.core.thing.binding.ThingHandler;
 import org.openhab.core.types.Command;
@@ -63,7 +58,7 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * The Huawei Sun 2000 Inverter Binding.
- *
+ * <p>
  * Based on HeliosEasyControlsHandler by Bernhard Bauer
  *
  * @author Martin Juecker - Initial contribution
@@ -82,6 +77,8 @@ public class HuaweiSun2000Handler extends BaseThingHandler {
     private @Nullable ModbusCommunicationInterface comms;
 
     private final Map<ModbusSlaveEndpoint, Semaphore> transactionLocks = new ConcurrentHashMap<>();
+
+    private final Map<String, Integer> lastState = new HashMap<>();
 
     public HuaweiSun2000Handler(Thing thing) {
         super(thing);
@@ -208,7 +205,7 @@ public class HuaweiSun2000Handler extends BaseThingHandler {
 
         // poll for status updates regularly
         this.pollingJob = scheduler.scheduleWithFixedDelay(() -> {
-            readValue(HuaweiSun2000BindingConstants.INVERTER_STATE, this::consumeInverterBasics);
+            readValue(HuaweiSun2000BindingConstants.INVERTER_STATE, this::consumeInverterState);
             readValue(HuaweiSun2000BindingConstants.INVERTER_ADJUSTMENTS, this::consumeInverterAdjustments);
         }, 5000, config.getRefreshInterval(), TimeUnit.MILLISECONDS);
     }
@@ -363,6 +360,8 @@ public class HuaweiSun2000Handler extends BaseThingHandler {
             return new QuantityType<>(value, Units.VOLT);
         } else if (unit.equals(HuaweiSun2000Variable.UNIT_KILOWATT)) {
             return new QuantityType<>(value * 1000, Units.WATT);
+        } else if (unit.equals(HuaweiSun2000Variable.UNIT_KILOWATT_HOURS)) {
+            return new QuantityType<>(value, Units.KILOWATT_HOUR);
         } else if (unit.equals(HuaweiSun2000Variable.UNIT_PERCENT)) {
             return new QuantityType<>(value, Units.PERCENT);
         } else if (unit.equals(HuaweiSun2000Variable.UNIT_TEMP)) {
@@ -372,56 +371,95 @@ public class HuaweiSun2000Handler extends BaseThingHandler {
         }
     }
 
-    private void updateState(HuaweiSun2000Variable v, byte[] content) {
+    private void updateState(HuaweiSun2000Variable variable, byte[] content) {
         // System date and time
-        Channel channel = getThing().getChannel(v.getGroupAndName());
-        String itemType;
-        if (channel != null) {
-            itemType = channel.getAcceptedItemType();
-            if (itemType != null) {
-                if (itemType.startsWith("Number:")) {
-                    itemType = "Number";
-                }
 
-                switch (itemType) {
-                    case "Number":
-                        if (v.isNumber()) {
-                            State state = null;
-                            int result = 0;
-                            for (int i = 0; i < content.length; i++) {
-                                result = (result << 8) | (content[i] & 0xFF);
+        if (HuaweiSun2000Variable.TYPE_BITFIELD16.equals(variable.getType())
+                || HuaweiSun2000Variable.TYPE_BITFIELD32.equals(variable.getType())) {
+            updateBitfieldState(variable, content);
+        } else {
+            Channel channel = getThing().getChannel(variable.getGroupAndName());
+            String itemType;
+            if (channel != null) {
+                itemType = channel.getAcceptedItemType();
+                if (itemType != null) {
+                    if (itemType.startsWith("Number:")) {
+                        itemType = "Number";
+                    }
+
+                    switch (itemType) {
+                        case "Number":
+                            if (variable.isNumber()) {
+                                State state = null;
+                                int result = 0;
+                                for (int i = 0; i < content.length; i++) {
+                                    result = (result << 8) | (content[i] & 0xFF);
+                                }
+                                if (variable.getUnit() == null) {
+                                    state = new DecimalType(result);
+                                } else {
+                                    String unit = variable.getUnit();
+                                    BigDecimal dividend = BigDecimal.valueOf(result);
+                                    BigDecimal divisor = BigDecimal.valueOf(variable.getGain());
+                                    BigDecimal quotient = dividend.divide(divisor);
+                                    state = toQuantityType(quotient.doubleValue(), unit);
+                                }
+                                if (state != null) {
+                                    updateState(variable.getGroupAndName(), state);
+                                    updateStatus(ThingStatus.ONLINE);
+                                }
                             }
-                            if (v.getUnit() == null) {
-                                state = new DecimalType(result);
-                            } else {
-                                String unit = v.getUnit();
-                                BigDecimal dividend = BigDecimal.valueOf(result);
-                                BigDecimal divisor = BigDecimal.valueOf(v.getGain());
-                                BigDecimal quotient = dividend.divide(divisor);
-                                state = toQuantityType(quotient.doubleValue(), unit);
-                            }
-                            if (state != null) {
-                                updateState(v.getGroupAndName(), state);
+                            break;
+                        case "String":
+                            if (variable.isString()) {
+                                ByteBuffer buffer = ByteBuffer.wrap(content);
+                                updateState(variable.getGroupAndName(), StringType.valueOf(toString(buffer)));
                                 updateStatus(ThingStatus.ONLINE);
                             }
-                        }
-                        break;
-                    case "String":
-                        if (v.isString()) {
-                            ByteBuffer buffer = ByteBuffer.wrap(content);
-                            updateState(v.getGroupAndName(), StringType.valueOf(toString(buffer)));
-                            updateStatus(ThingStatus.ONLINE);
-                        }
-                        break;
+                            break;
+                    }
+                } else { // itemType was null
+                    logger.warn("{} couldn't determine item type of variable {}",
+                            HuaweiSun2000Handler.class.getSimpleName(), variable.getName());
                 }
-            } else { // itemType was null
-                logger.warn("{} couldn't determine item type of variable {}",
-                        HuaweiSun2000Handler.class.getSimpleName(), v.getName());
+            } else { // channel was null
+                logger.warn("{} couldn't find channel for variable {}", HuaweiSun2000Handler.class.getSimpleName(),
+                        variable.getName());
             }
-        } else { // channel was null
-            logger.warn("{} couldn't find channel for variable {}", HuaweiSun2000Handler.class.getSimpleName(),
-                    v.getName());
         }
+    }
+
+    private void updateBitfieldState(HuaweiSun2000Variable variable, byte[] content) {
+        int currentValue = 0;
+        for (int i = 0; i < content.length; i++) {
+            currentValue = (currentValue << 8) | (content[i] & 0xFF);
+        }
+        String groupAndName = variable.getGroupAndName();
+        Integer lastValue = lastState.get(groupAndName);
+
+        int bitfieldLength = content.length * 8;
+        for (int i = 0; i < bitfieldLength; i++) {
+            String channelName = groupAndName + "_" + (i + 1);
+            Channel channel = getThing().getChannel(channelName);
+            if (channel == null) {
+                break;
+            }
+
+            boolean wasSet = lastValue != null && (((0b1 << i) & lastValue) > 0);
+            boolean isSet = ((0b1 << i) & currentValue) > 0;
+            if (wasSet != isSet || lastValue == null) {
+                if (channelName.contains("alarm")) {
+                    if (isSet && !wasSet) {
+                        triggerChannel(channel.getUID(), "1");
+                    } else if (!isSet && wasSet) {
+                        triggerChannel(channel.getUID(), "0");
+                    }
+                } else {
+                    updateState(channel.getUID(), new DecimalType(isSet ? 1 : 0));
+                }
+            }
+        }
+        lastState.put(groupAndName, currentValue);
     }
 
     private String toString(ByteBuffer byteBuffer) {

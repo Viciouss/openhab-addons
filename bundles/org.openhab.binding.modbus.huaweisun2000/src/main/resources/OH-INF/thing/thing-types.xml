@@ -21,10 +21,10 @@
 		</channel-groups>
 
 		<config-description>
-			<parameter name="refreshInterval" type="integer" unit="ms" min="30000">
+			<parameter name="refreshInterval" type="integer" unit="ms" min="10000">
 				<label>Refresh Interval</label>
 				<description>Refresh interval</description>
-				<default>60000</default>
+				<default>30000</default>
 			</parameter>
 		</config-description>
 
@@ -74,6 +74,101 @@
 		<label>inverterState</label>
 		<description>inverterState</description>
 		<channels>
+
+			<channel id="state1_1" typeId="state1_1">
+				<label>Standby</label>
+			</channel>
+			<channel id="state1_2" typeId="state1_2">
+				<label>Grid connected</label>
+			</channel>
+			<channel id="state1_3" typeId="state1_3">
+				<label>Grid connected with derating due to power rationing</label>
+			</channel>
+			<channel id="state1_4" typeId="state1_4">
+				<label>Grid connected with derating due to internal causes</label>
+			</channel>
+			<channel id="state1_5" typeId="state1_5">
+				<label>Normal Stop</label>
+			</channel>
+			<channel id="state1_6" typeId="state1_6">
+				<label>Stop due to faults</label>
+			</channel>
+			<channel id="state1_7" typeId="state1_7">
+				<label>Stop due to power rationing</label>
+			</channel>
+			<channel id="state1_8" typeId="state1_8">
+				<label>Shutdown</label>
+			</channel>
+			<channel id="state1_9" typeId="state1_9">
+				<label>Spot check</label>
+			</channel>
+
+			<channel id="state2_1" typeId="state2_1">
+				<label>Locking Status</label>
+			</channel>
+			<channel id="state2_2" typeId="state2_2">
+				<label>PV Connection Status</label>
+			</channel>
+			<channel id="state2_3" typeId="state2_3">
+				<label>DSP Data Collection</label>
+			</channel>
+
+			<channel id="state3_1" typeId="state3_1">
+				<label>Grid Status</label>
+			</channel>
+			<channel id="state3_2" typeId="state3_2">
+				<label>Off Grid Switch</label>
+			</channel>
+
+			<channel id="alarm1_1" typeId="alarm1_1"/>
+			<channel id="alarm1_2" typeId="alarm1_2"/>
+			<channel id="alarm1_3" typeId="alarm1_3"/>
+			<channel id="alarm1_4" typeId="alarm1_4"/>
+			<channel id="alarm1_5" typeId="alarm1_5"/>
+			<channel id="alarm1_6" typeId="alarm1_6"/>
+			<channel id="alarm1_7" typeId="alarm1_7"/>
+			<channel id="alarm1_8" typeId="alarm1_8"/>
+			<channel id="alarm1_9" typeId="alarm1_9"/>
+			<channel id="alarm1_10" typeId="alarm1_10"/>
+			<channel id="alarm1_11" typeId="alarm1_11"/>
+			<channel id="alarm1_12" typeId="alarm1_12"/>
+			<channel id="alarm1_13" typeId="alarm1_13"/>
+			<channel id="alarm1_14" typeId="alarm1_14"/>
+			<channel id="alarm1_15" typeId="alarm1_15"/>
+			<channel id="alarm1_16" typeId="alarm1_16"/>
+
+			<channel id="alarm2_1" typeId="alarm2_1"/>
+			<channel id="alarm2_2" typeId="alarm2_2"/>
+			<channel id="alarm2_3" typeId="alarm2_3"/>
+			<channel id="alarm2_4" typeId="alarm2_4"/>
+			<channel id="alarm2_5" typeId="alarm2_5"/>
+			<channel id="alarm2_6" typeId="alarm2_6"/>
+			<channel id="alarm2_7" typeId="alarm2_7"/>
+			<channel id="alarm2_8" typeId="alarm2_8"/>
+			<channel id="alarm2_9" typeId="alarm2_9"/>
+			<channel id="alarm2_10" typeId="alarm2_10"/>
+			<channel id="alarm2_11" typeId="alarm2_11"/>
+			<channel id="alarm2_12" typeId="alarm2_12"/>
+			<channel id="alarm2_13" typeId="alarm2_13"/>
+			<channel id="alarm2_14" typeId="alarm2_14"/>
+			<channel id="alarm2_15" typeId="alarm2_15"/>
+			<channel id="alarm2_16" typeId="alarm2_16"/>
+
+			<channel id="alarm3_1" typeId="alarm3_1"/>
+			<channel id="alarm3_2" typeId="alarm3_2"/>
+			<channel id="alarm3_3" typeId="alarm3_3"/>
+			<channel id="alarm3_4" typeId="alarm3_4"/>
+			<channel id="alarm3_5" typeId="alarm3_5"/>
+			<channel id="alarm3_6" typeId="alarm3_6"/>
+			<channel id="alarm3_7" typeId="alarm3_7"/>
+			<channel id="alarm3_8" typeId="alarm3_8"/>
+			<channel id="alarm3_9" typeId="alarm3_9"/>
+			<channel id="alarm3_10" typeId="alarm3_10"/>
+			<channel id="alarm3_11" typeId="alarm3_11"/>
+			<channel id="alarm3_12" typeId="alarm3_12"/>
+			<channel id="alarm3_13" typeId="alarm3_13"/>
+			<channel id="alarm3_14" typeId="alarm3_14"/>
+
 			<channel id="pv1Voltage" typeId="pv1Voltage">
 				<label>PV1 voltage</label>
 			</channel>
@@ -266,6 +361,569 @@
 		<category>energy</category>
 		<state pattern="%d %unit%" readOnly="true"/>
 	</channel-type>
+
+	<channel-type id="state1_1">
+		<item-type>Switch</item-type>
+		<label>Standby</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_2">
+		<item-type>Switch</item-type>
+		<label>Grid connected</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_3">
+		<item-type>Switch</item-type>
+		<label>Grid connected with derating due to power rationing</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_4">
+		<item-type>Switch</item-type>
+		<label>Grid connected with derating due to internal causes</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_5">
+		<item-type>Switch</item-type>
+		<label>Normal Stop</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_6">
+		<item-type>Switch</item-type>
+		<label>Stop due to faults</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_7">
+		<item-type>Switch</item-type>
+		<label>Stop due to power rationing</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_8">
+		<item-type>Switch</item-type>
+		<label>Shutdown</label>
+		<state readOnly="true"/>
+	</channel-type>
+	<channel-type id="state1_9">
+		<item-type>Switch</item-type>
+		<label>Spot check</label>
+		<state readOnly="true"/>
+	</channel-type>
+
+	<channel-type id="state2_1">
+		<item-type>Number</item-type>
+		<label>Locking Status</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">Locked</option>
+				<option value="1">Unlocked</option>
+			</options>
+		</state>
+	</channel-type>
+	<channel-type id="state2_2">
+		<item-type>Number</item-type>
+		<label>PV Connection Status</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">Disconnected</option>
+				<option value="1">Connected</option>
+			</options>
+		</state>
+	</channel-type>
+	<channel-type id="state2_3">
+		<item-type>Number</item-type>
+		<label>DSP Data Collection</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</options>
+		</state>
+	</channel-type>
+
+	<channel-type id="state3_1">
+		<item-type>Number</item-type>
+		<label>Grid Status</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">On Grid</option>
+				<option value="1">Off Grid</option>
+			</options>
+		</state>
+
+	</channel-type>
+	<channel-type id="state3_2">
+		<item-type>Number</item-type>
+		<label>Off Grid Switch</label>
+		<state readOnly="true">
+			<options>
+				<option value="0">Disabled</option>
+				<option value="1">Enabled</option>
+			</options>
+		</state>
+	</channel-type>
+
+	<channel-type id="alarm1_1">
+		<kind>trigger</kind>
+		<label>High String Input Voltage</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_2">
+		<kind>trigger</kind>
+		<label>DC Arc Fault</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_3">
+		<kind>trigger</kind>
+		<label>String Reverse Connection</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_4">
+		<kind>trigger</kind>
+		<label>String Current Backfeed</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_5">
+		<kind>trigger</kind>
+		<label>Abnormal String Power</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_6">
+		<kind>trigger</kind>
+		<label>AFCI Self-Check Fail</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_7">
+		<kind>trigger</kind>
+		<label>Phase Wire Short-Circuited to PE</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_8">
+		<kind>trigger</kind>
+		<label>Grid Loss</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_9">
+		<kind>trigger</kind>
+		<label>Grid Undervoltage</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_10">
+		<kind>trigger</kind>
+		<label>Grid Overvoltage</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_11">
+		<kind>trigger</kind>
+		<label>Grid Voltage Imbalance</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_12">
+		<kind>trigger</kind>
+		<label>Grid Overfrequency</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_13">
+		<kind>trigger</kind>
+		<label>Grid Underfrequency</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_14">
+		<kind>trigger</kind>
+		<label>Unstable Grid Frequency</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_15">
+		<kind>trigger</kind>
+		<label>Output Overcurrent</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm1_16">
+		<kind>trigger</kind>
+		<label>Output DC Component Over High</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+
+	<channel-type id="alarm2_1">
+		<kind>trigger</kind>
+		<label>Abnormal Residual Current</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_2">
+		<kind>trigger</kind>
+		<label>Abnormal Grounding</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_3">
+		<kind>trigger</kind>
+		<label>Low Insulation Resistance</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_4">
+		<kind>trigger</kind>
+		<label>Over Temperature</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_5">
+		<kind>trigger</kind>
+		<label>Device Fault</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_6">
+		<kind>trigger</kind>
+		<label>Upgrade Failed or Version Mismatch</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_7">
+		<kind>trigger</kind>
+		<label>License Expired</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_8">
+		<kind>trigger</kind>
+		<label>Faulty Monitoring Unit</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_9">
+		<kind>trigger</kind>
+		<label>Faulty Power Collector</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_10">
+		<kind>trigger</kind>
+		<label>Battery Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_11">
+		<kind>trigger</kind>
+		<label>Active Islanding</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_12">
+		<kind>trigger</kind>
+		<label>Passive Islanding</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_13">
+		<kind>trigger</kind>
+		<label>Transient AC Overvoltage</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_14">
+		<kind>trigger</kind>
+		<label>Peripheral Port Short Circuit</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_15">
+		<kind>trigger</kind>
+		<label>Churn Output Overload</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm2_16">
+		<kind>trigger</kind>
+		<label>Abnormal PV Module Configuration</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+
+	<channel-type id="alarm3_1">
+		<kind>trigger</kind>
+		<label>Optimizer Fault</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_2">
+		<kind>trigger</kind>
+		<label>Built-in PID operation abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_3">
+		<kind>trigger</kind>
+		<label>High input string voltage to ground</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_4">
+		<kind>trigger</kind>
+		<label>External Fan Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_5">
+		<kind>trigger</kind>
+		<label>Battery Reverse Connection</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_6">
+		<kind>trigger</kind>
+		<label>On-grid/Off-grid controller abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_7">
+		<kind>trigger</kind>
+		<label>PV String Loss</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_8">
+		<kind>trigger</kind>
+		<label>Internal Fan Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_9">
+		<kind>trigger</kind>
+		<label>DC Protection Unit Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_10">
+		<kind>trigger</kind>
+		<label>EL Unit Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_11">
+		<kind>trigger</kind>
+		<label>Active Adjustment Instruction Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_12">
+		<kind>trigger</kind>
+		<label>Reactive Adjustment Instruction Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_13">
+		<kind>trigger</kind>
+		<label>CT Wiring Abnormal</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+	<channel-type id="alarm3_14">
+		<kind>trigger</kind>
+		<label>DC Arc Fault (ADMC Alarm to be cleared manually)</label>
+		<event>
+			<options>
+				<option value="0">deactivated</option>
+				<option value="1">activated</option>
+			</options>
+		</event>
+	</channel-type>
+
 
 	<channel-type id="pv1Voltage" advanced="false">
 		<item-type>Number:ElectricPotential</item-type>
